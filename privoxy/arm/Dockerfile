@@ -2,13 +2,11 @@
 # Dockerfile for privoxy-arm
 #
 
-FROM easypi/alpine-arm
-MAINTAINER kev <noreply@easypi.pro>
+FROM arm32v7/alpine
+MAINTAINER kirk 
 
 RUN set -xe \
     && apk add -U curl privoxy \
-    && curl -sSL https://github.com/tianon/gosu/releases/download/1.9/gosu-armhf > /usr/sbin/gosu \
-    && chmod +x /usr/sbin/gosu \
     && apk del curl \
     && rm -rf /var/cache/apk/*
 
@@ -21,4 +19,4 @@ VOLUME /etc/privoxy
 
 EXPOSE 8118
 
-CMD gosu privoxy privoxy --no-daemon /etc/privoxy/config
+CMD sudo -u privoxy privoxy --no-daemon /etc/privoxy/config
